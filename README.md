@@ -52,3 +52,18 @@ You should see output similar to the following:
  * Debugger PIN: 226-556-590
 ```
 Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser to view the app.
+
+## Trello: obtain API key + token
+
+Create Trello account - https://trello.com/signup
+
+Generate API key and token - https://trello.com/power-ups/admin/
+
+Select 'New' button which will take you to the following URL - https://trello.com/power-ups/admin/new
+
+Populate the on-screen form with details, please note Iframe connector URL is not required for API/Token access.
+
+Add your newly acquired API key and token variables to `.env` file.
+
+Add the requests library to your list of poetry dependencies in pyproject.toml by running `poetry add requests`.
+

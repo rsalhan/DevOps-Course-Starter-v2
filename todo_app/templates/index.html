@@ -12,7 +12,7 @@
       <h2>Items</h2>
       <ul class="list-group mb-4">
         {% for each_item in items_list %}
-          <li>#{{each_item.id}}: {{ each_item.title }} - {{each_item.status }}</li>
+          <li>Task: {{ each_item.name }} | URL: {{each_item.shortUrl }} | ID: {{each_item.id}}</li>
         {% endfor %}
       </ul>
     </div>

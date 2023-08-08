@@ -67,3 +67,4 @@ Add your newly acquired API key and token variables to `.env` file.
 
 Add the requests library to your list of poetry dependencies in pyproject.toml by running `poetry add requests`.
 
+Also add your board ID to the `.env` file.

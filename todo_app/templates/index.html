@@ -3,28 +3,97 @@
 
 {% block content %}
   <div class="jumbotron">
-    <h1 class="display-4">To-Do App</h1>
+    <h1 class="display-6">To-Do App</h1>
     <p class="lead">Just another to-do app.</p>
+    <form action="/additem" method="post" class="form-example">
+      <div class="form-example">
+        <label for="name">New To-Do item: </label>
+        <input type="text" name="new-todo" required>
+        <button type="submit" name ="Submit">Add</button>
+      </div>
+    </form>
   </div>
-
   <div class="row">
     <div class="col-md-12">
-      <h2>Items</h2>
+      <h3>To-Do</h3>
       <ul class="list-group mb-4">
-        {% for each_item in items_list %}
-          <li>Task: {{ each_item.name }} | URL: {{each_item.shortUrl }} | ID: {{each_item.id}}</li>
+        {% for each_todo in todo_list %}
+        <table style="width:100%">
+          <colgroup>
+            <col style="width: 50%">
+            <col style="width: 25%">
+            <col style="width: 25%">
+          </colgroup>
+          <td>
+            <li>Task: {{each_todo.name}} | <!--ID: {{each_todo.id}} |--> <b>PENDING</b></li>
+          </td>
+          <td>
+            <form method="post" action="/movetodoing">
+              <input name="id" hidden value="{{each_todo.id}}" required>
+              <button type="submit" name="Submit">-> Doing</button>
+            </form>
+          </td>
+          <td></td>
+        </table>
         {% endfor %}
       </ul>
     </div>
   </div>
-
-  <form action="/additem" method="post" class="form-example">
-    <div class="form-example">
-      <label for="name">New To-Do item: </label>
-      <input type="text" name="new-todo" required>
-    <div class="form-example">
-      <input type="submit" value="Add">
+  <div class="row">
+    <div class="col-md-12">
+      <h3>Doing</h3>
+      <ul class="list-group mb-4">
+        {% for each_doing in doing_list %}
+        <table style="width:100%">
+          <colgroup>
+            <col style="width: 50%">
+            <col style="width: 20%">
+            <col style="width: 10%">
+            <col style="width: 20%">
+          </colgroup>
+          <td>
+            <li>Task: {{each_doing.name}} | <!--ID: {{each_doing.id}} |--> <b>ONGOING</b></li>
+          </td>
+          <td>
+            <form method="post" action="/movetotodo">
+              <input name="id" hidden value="{{each_doing.id}}" required>
+              <button type="submit" name="Submit">-> ToDo</button>
+            </form>
+          </td>
+          <td>
+            <form method="post" action="/movetodone">
+              <input name="id" hidden value="{{each_doing.id}}" required>
+              <button type="submit" name="Submit">-> Done</button>
+            </form>
+          </td>
+        </table>        
+        {% endfor %}
+      </ul>
     </div>
-  </form>
-
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h3>Done</h3>
+      <ul class="list-group mb-4">
+        {% for each_done in done_list %}
+        <table style="width:100%">
+          <colgroup>
+            <col style="width: 50%">
+            <col style="width: 25%">
+            <col style="width: 25%">
+          </colgroup>
+          <td>
+            <li>Task: {{each_done.name}} | <!--ID: {{each_done.id}} |--> <b>COMPLETE</b></li>
+          </td>
+          <td>
+            <form method="post" action="/movetodoing">
+              <input name="id" hidden value="{{each_done.id}}" required>
+              <button type="submit" name="Submit">-> Doing</button>
+            </form>
+          </td>
+          <td></td>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
 {% endblock %}

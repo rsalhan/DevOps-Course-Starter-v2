@@ -1,23 +1,35 @@
-#import todo_app.data.session_items as module_SI
-from todo_app.data.session_items import get_items, add_item
-from todo_app.data.trello_items import get_lists, add_card #, get_member_boards
+from todo_app.data.trello_items import add_card, todo_list, doing_list, done_list, move_to_todo, move_to_doing, move_to_done 
 
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, redirect
 from todo_app.flask_config import Config
-
 
 app = Flask(__name__)
 app.config.from_object(Config())
 
 @app.route('/')
 def index():
-    #retrieve_items = get_items()
-    retrieve_items = get_lists()
-    return render_template('index.html', items_list = retrieve_items)
+    print('---LOADING---')
+    retrieve_todo = todo_list()
+    retrieve_doing = doing_list()
+    retrieve_done = done_list()
+    return render_template('index.html', todo_list = retrieve_todo, doing_list = retrieve_doing, done_list = retrieve_done)
 
 @app.route('/additem', methods = ["POST"])
 def add_new_item():
-    #new_todo = request.form.get('new-todo')
-    #add_item(new_todo)
     add_card()
+    return redirect('/')
+
+@app.route('/movetotodo', methods = ["POST"])
+def movetotodo():
+    move_to_todo()
+    return redirect('/')
+
+@app.route('/movetodoing', methods = ["POST"])
+def movetodoing():
+    move_to_doing()
+    return redirect('/')
+
+@app.route('/movetodone', methods = ["POST"])
+def movetodone():
+    move_to_done()
     return redirect('/')

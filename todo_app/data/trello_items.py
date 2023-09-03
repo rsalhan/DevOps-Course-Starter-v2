@@ -4,9 +4,7 @@ from flask import request
 trello_url = os.getenv("BASE_URL")
 trello_key = os.getenv("API_KEY")
 trello_token = os.getenv("TOKEN")
-
 trello_board_id = os.getenv("BOARD_ID")
-brainstorm_idlist = os.getenv("BRAINSTORM_IDLIST")
 
 headers = {"Accept": "application/json"}
 

@@ -1,4 +1,4 @@
-from todo_app.data.trello_items import add_card, todo_list, doing_list, done_list, move_to_todo, move_to_doing, move_to_done 
+from todo_app.data.trello_items import add_card, todo_list, doing_list, done_list, move_to_todo, move_to_doing, move_to_done #load_lists, 
 
 from flask import Flask, render_template, redirect
 from todo_app.flask_config import Config
@@ -8,6 +8,7 @@ app.config.from_object(Config())
 
 @app.route('/')
 def index():
+    #load_lists()
     print('---LOADING---')
     retrieve_todo = todo_list()
     retrieve_doing = doing_list()

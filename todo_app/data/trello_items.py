@@ -1,7 +1,20 @@
 import os, requests
 from flask import request
 
-# headers = {"Accept": "application/json"}
+class Item:
+    def __init__(self, id, name, status = 'To Do'):
+        self.id = id
+        self.name = name
+        self.status = status
+
+    @classmethod
+    def from_trello_card(cls, card, list_name):
+        return cls(card['id'], card['name'], list_name)
+
+def headers():
+    headers = {"Accept": "application/json"}
+    return headers
+    #return {"Accept": "application/json"}
 
 # trello_url = os.getenv("BASE_URL")
 # trello_key = os.getenv("API_KEY")
@@ -48,10 +61,6 @@ def doing_idlist():
 def done_idlist():
     return os.getenv("DONE_IDLIST")
 
-def headers():
-    headers = {"Accept": "application/json"}
-    return headers
-
 def add_card():
     new_todo = request.form.get('new-todo')
     add_card_path = "cards"
@@ -70,7 +79,13 @@ def todo_list():
     todo_response = requests.request("GET", todo_url, headers=headers(), params=query_params)
     todo_json = todo_response.json()
     print(todo_json)
-    return todo_json
+    items_list = []
+    for each_todoitem in todo_json:
+        item = Item.from_trello_card(each_todoitem, 'To Do')
+        items_list.append(item)
+    print(f"--> DONE items_list: {items_list}")
+    return items_list
+    #return todo_json
 
 def doing_list():
     doing_list_path = "lists/"+doing_idlist()+"/cards"
@@ -80,7 +95,13 @@ def doing_list():
     doing_response = requests.request("GET", doing_url, headers=headers(), params=query_params)
     doing_json = doing_response.json()
     print(doing_json)
-    return doing_json
+    items_list = []
+    for each_doingitem in doing_json:
+        item = Item.from_trello_card(each_doingitem, 'Doing')
+        items_list.append(item)
+    print(f"--> DOING items_list: {items_list}")
+    return items_list
+    #return doing_json
 
 def done_list():
     done_list_path = "lists/"+done_idlist()+"/cards"
@@ -90,7 +111,13 @@ def done_list():
     done_response = requests.request("GET", done_url, headers=headers(), params=query_params)
     done_json = done_response.json()
     print(done_json)
-    return done_json
+    items_list = []
+    for each_doneitem in done_json:
+        item = Item.from_trello_card(each_doneitem, 'Done')
+        items_list.append(item)
+    print(f"--> DONE items_list: {items_list}")
+    return items_list
+    #return done_json
 
 def move_to_todo():
     trello_card_id = request.form.get('id')

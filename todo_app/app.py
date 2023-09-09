@@ -1,4 +1,5 @@
-from todo_app.data.trello_items import add_card, todo_list, doing_list, done_list, move_to_todo, move_to_doing, move_to_done #load_lists, 
+from todo_app.data.trello_items import add_card, todo_list, doing_list, done_list, move_to_todo, move_to_doing, move_to_done
+from todo_app.view_model import ViewModel
 
 from flask import Flask, render_template, redirect
 from todo_app.flask_config import Config
@@ -8,12 +9,13 @@ app.config.from_object(Config())
 
 @app.route('/')
 def index():
-    #load_lists()
     print('---LOADING---')
     retrieve_todo = todo_list()
     retrieve_doing = doing_list()
     retrieve_done = done_list()
-    return render_template('index.html', todo_list = retrieve_todo, doing_list = retrieve_doing, done_list = retrieve_done)
+    item_view_model = ViewModel(retrieve_todo, retrieve_doing, retrieve_done)
+    return render_template('index.html', view_model = item_view_model)
+    #return render_template('index.html', todo_list = retrieve_todo, doing_list = retrieve_doing, done_list = retrieve_done)
 
 @app.route('/additem', methods = ["POST"])
 def add_new_item():

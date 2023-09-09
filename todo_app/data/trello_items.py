@@ -14,12 +14,6 @@ class Item:
 def headers():
     headers = {"Accept": "application/json"}
     return headers
-    #return {"Accept": "application/json"}
-
-# trello_url = os.getenv("BASE_URL")
-# trello_key = os.getenv("API_KEY")
-# trello_token = os.getenv("TOKEN")
-# trello_board_id = os.getenv("BOARD_ID")
 
 def trello_url():
     return os.getenv("BASE_URL")
@@ -32,25 +26,6 @@ def trello_token():
 
 def trello_board_id():
     return os.getenv("BOARD_ID")
-
-# todo_idlist = None
-# doing_idlist = None
-# done_idlist = None
-
-# def load_lists():
-#     get_lists_path = "boards/"+trello_board_id()+"/lists"
-#     url = trello_url() + get_lists_path
-#     query_params = {"key": trello_key(), "token": trello_token(), "field": "name"}
-#     print(f"--> URL: {url}")
-#     response = requests.request("GET", url, headers=headers, params=query_params)
-#     response_json = response.json()
-#     print(response_json)
-
-#     global todo_idlist, doing_idlist, done_idlist
-
-#     todo_idlist = response_json[0].get("id")
-#     doing_idlist = response_json[1].get("id")
-#     done_idlist = response_json[2].get("id")
 
 def todo_idlist():
     return os.getenv("TODO_IDLIST")
@@ -85,7 +60,6 @@ def todo_list():
         items_list.append(item)
     print(f"--> DONE items_list: {items_list}")
     return items_list
-    #return todo_json
 
 def doing_list():
     doing_list_path = "lists/"+doing_idlist()+"/cards"
@@ -101,7 +75,6 @@ def doing_list():
         items_list.append(item)
     print(f"--> DOING items_list: {items_list}")
     return items_list
-    #return doing_json
 
 def done_list():
     done_list_path = "lists/"+done_idlist()+"/cards"
@@ -117,7 +90,6 @@ def done_list():
         items_list.append(item)
     print(f"--> DONE items_list: {items_list}")
     return items_list
-    #return done_json
 
 def move_to_todo():
     trello_card_id = request.form.get('id')

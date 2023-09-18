@@ -65,6 +65,20 @@ Populate the on-screen form with details, please note Iframe connector URL is no
 
 Add your newly acquired API key and token variables to `.env` file.
 
-Add the requests library to your list of poetry dependencies in pyproject.toml by running `poetry add requests`.
+Add the requests library to your list of poetry dependencies in pyproject.toml by running ## Trello: obtain API key + token.
 
-Also add your board ID to the `.env` file.
+Also add your board ID and list IDs (for ToDo, Doing + Done) to the `.env` file.
+
+## Unit Tests
+
+Please familiarise yourself with `view_model.py` before reviewing contents of `test_view_model.py`.
+
+
+## Integration Tests
+
+Please also review `app.py` as well as `test_app.py` which will pull your test environment variables from `env.test.py`.
+
+
+## Executing Unit/Integration Test
+
+Please execute `poetry run pytest` from a terminal ensuring you at the correct path/level.

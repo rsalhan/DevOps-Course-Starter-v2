@@ -17,24 +17,24 @@
     <div class="col-md-12">
       <h3>To-Do</h3>
       <ul class="list-group mb-4">
-        {% for each_todo in todo_list %}
-        <table style="width:100%">
-          <colgroup>
-            <col style="width: 50%">
-            <col style="width: 25%">
-            <col style="width: 25%">
-          </colgroup>
-          <td>
-            <li>Task: {{each_todo.name}} | <b>PENDING</b></li>
-          </td>
-          <td>
-            <form method="post" action="/movetodoing">
-              <input name="id" hidden value="{{each_todo.id}}" required>
-              <button type="submit" name="Submit">-> Doing</button>
-            </form>
-          </td>
-          <td></td>
-        </table>
+        {% for each_todo in view_model.retrieve_todo %}
+          <table style="width:100%">
+            <colgroup>
+              <col style="width: 50%">
+              <col style="width: 25%">
+              <col style="width: 25%">
+            </colgroup>
+            <td>
+              <li>Task: {{each_todo.name}} | <b>PENDING</b></li>
+            </td>
+            <td>
+              <form method="post" action="/movetodoing">
+                <input name="id" hidden value="{{each_todo.id}}" required>
+                <button type="submit" name="Submit">-> Doing</button>
+              </form>
+            </td>
+            <td></td>
+          </table>
         {% endfor %}
       </ul>
     </div>
@@ -43,30 +43,30 @@
     <div class="col-md-12">
       <h3>Doing</h3>
       <ul class="list-group mb-4">
-        {% for each_doing in doing_list %}
-        <table style="width:100%">
-          <colgroup>
-            <col style="width: 50%">
-            <col style="width: 20%">
-            <col style="width: 10%">
-            <col style="width: 20%">
-          </colgroup>
-          <td>
-            <li>Task: {{each_doing.name}} | <b>ONGOING</b></li>
-          </td>
-          <td>
-            <form method="post" action="/movetotodo">
-              <input name="id" hidden value="{{each_doing.id}}" required>
-              <button type="submit" name="Submit">-> ToDo</button>
-            </form>
-          </td>
-          <td>
-            <form method="post" action="/movetodone">
-              <input name="id" hidden value="{{each_doing.id}}" required>
-              <button type="submit" name="Submit">-> Done</button>
-            </form>
-          </td>
-        </table>        
+        {% for each_doing in view_model.retrieve_doing %}
+          <table style="width:100%">
+            <colgroup>
+              <col style="width: 50%">
+              <col style="width: 20%">
+              <col style="width: 10%">
+              <col style="width: 20%">
+            </colgroup>
+            <td>
+              <li>Task: {{each_doing.name}} | <b>ONGOING</b></li>
+            </td>
+            <td>
+              <form method="post" action="/movetotodo">
+                <input name="id" hidden value="{{each_doing.id}}" required>
+                <button type="submit" name="Submit">-> ToDo</button>
+              </form>
+            </td>
+            <td>
+              <form method="post" action="/movetodone">
+                <input name="id" hidden value="{{each_doing.id}}" required>
+                <button type="submit" name="Submit">-> Done</button>
+              </form>
+            </td>
+          </table>        
         {% endfor %}
       </ul>
     </div>
@@ -75,23 +75,24 @@
     <div class="col-md-12">
       <h3>Done</h3>
       <ul class="list-group mb-4">
-        {% for each_done in done_list %}
-        <table style="width:100%">
-          <colgroup>
-            <col style="width: 50%">
-            <col style="width: 25%">
-            <col style="width: 25%">
-          </colgroup>
-          <td>
-            <li>Task: {{each_done.name}} | <b>COMPLETE</b></li>
-          </td>
-          <td>
-            <form method="post" action="/movetodoing">
-              <input name="id" hidden value="{{each_done.id}}" required>
-              <button type="submit" name="Submit">-> Doing</button>
-            </form>
-          </td>
-          <td></td>
+        {% for each_done in view_model.retrieve_done %}
+          <table style="width:100%">
+            <colgroup>
+              <col style="width: 50%">
+              <col style="width: 25%">
+              <col style="width: 25%">
+            </colgroup>
+            <td>
+              <li>Task: {{each_done.name}} | <b>COMPLETE</b></li>
+            </td>
+            <td>
+              <form method="post" action="/movetodoing">
+                <input name="id" hidden value="{{each_done.id}}" required>
+                <button type="submit" name="Submit">-> Doing</button>
+              </form>
+            </td>
+            <td></td>
+          </table>
         {% endfor %}
       </ul>
     </div>

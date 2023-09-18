@@ -69,8 +69,16 @@ Add the requests library to your list of poetry dependencies in pyproject.toml b
 
 Also add your board ID and list IDs (for ToDo, Doing + Done) to the `.env` file.
 
-## ViewModel Unit Tests
+## Unit Tests
 
 Please familiarise yourself with `view_model.py` before reviewing contents of `test_view_model.py`.
 
-Please execute `poetry run pytest` from a terminal ensuring you at the correct path level.
+
+## Integration Tests
+
+Please also review `app.py` as well as `test_app.py` which will pull your test environment variables from `env.test.py`.
+
+
+## Executing Unit/Integration Test
+
+Please execute `poetry run pytest` from a terminal ensuring you at the correct path/level.

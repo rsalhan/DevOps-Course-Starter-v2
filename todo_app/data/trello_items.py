@@ -52,7 +52,6 @@ def todo_list():
     query_params = {"key": trello_key(), "token": trello_token(), "fields": "name"}
     print(f"--> todo_list URL: {todo_url}")
     todo_response = requests.request("GET", todo_url, headers=headers(), params=query_params)
-    #todo_response = requests.get(todo_url, headers=headers(), params=query_params)
     todo_json = todo_response.json()
     print(todo_json)
     items_list = []

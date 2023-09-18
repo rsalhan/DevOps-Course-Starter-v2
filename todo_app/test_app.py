@@ -29,66 +29,35 @@ def stub(action, url, headers={}, params={}):
     test_doing_id = os.environ.get('DOING_IDLIST')
     test_done_id = os.environ.get('DONE_IDLIST')
     fake_response_data = None
-    
-    #test_board_id = os.environ.get('TRELLO_BOARD_ID')
-
-    # if url == f'https://api.trello.com/1/boards/{test_board_id}/lists':
-    #     fake_response_data = [{
-    #         'id': '123abc',
-    #         'name': 'To Do',
-    #         'cards': [{'id': '456', 'name': 'ToDo test card'}]
-    #     },{'id': '456def',
-    #         'name': 'Doing',
-    #         'cards': [{'id': '789', 'name': 'Doing test card'}]
-    #     },{'id': '789ghi',
-    #         'name': 'Done',
-    #         'cards': [{'id': '101112', 'name': 'Done test card'}]
-    #     }]
-    #     return StubResponse(fake_response_data)
-    
+        
     if url == f'https://api.trello.com/1/lists/{test_todo_id}/cards':
-        fake_response_data = [{
-            'id': '123abc',
-            'name': 'To Do',
-            'cards': [{'id': '456', 'name': 'ToDo test card'}]
-        }]
+        fake_response_data = [
+            {'id': '123', 'name': 'ToDo test card 1'},
+            {'id': '456', 'name': 'ToDo test card 2'}
+            ]
         return StubResponse(fake_response_data)
        
     if url == f'https://api.trello.com/1/lists/{test_doing_id}/cards':
-        fake_response_data = [{
-            'id': '456def',
-            'name': 'Doing',
-            'cards': [{'id': '789', 'name': 'Doing test card'}]
-        }]
+        fake_response_data = [
+            {'id': '789', 'name': 'Doing test card'}
+            ]
         return StubResponse(fake_response_data)
     
     if url == f'https://api.trello.com/1/lists/{test_done_id}/cards':
-        fake_response_data = [{
-            'id': '789ghi',
-            'name': 'Done',
-            'cards': [{'id': '101112', 'name': 'Done test card'}]
-        }]
+        fake_response_data = [
+            {'id': '101112', 'name': 'Done test card'}
+            ]
         return StubResponse(fake_response_data)
 
     raise Exception(f'Integration test did not expect URL "{url}"')
 
 def test_index_page(monkeypatch, client):
     # Replace requests.get(url) with our own function
-    # monkeypatch.setattr(requests, 'get', stub)
     monkeypatch.setattr(requests, 'request', stub)
-    # monkeypatch.setattr(requests.request, 'get', stub)
-    # monkeypatch.setattr(trello_items, 'get', stub)
 
     # Make a request to our app's index page
     response = client.get('/')
 
     assert response.status_code == 200
-    # assert 'Test card' in response.data.decode()
-    # assert 'ToDo test card' in response.data.decode()
-    assert 'To Do' in response.data.decode()
-    assert '123abc' in response.data.decode()
-
-
-
-
+    assert 'ToDo test card 2' in response.data.decode()
 

@@ -7,6 +7,7 @@ class ViewModel:
  
     @property
     def retrieve_todo(self) -> list[Item]:
+        # results = [each_item for each_item in self._items if each_item.status == "To Do"]
         results: list[Item] = []   
         for each_item in self._items:
             if each_item.status == "To Do":

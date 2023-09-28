@@ -23,5 +23,6 @@ def test_view_model_done_doing_todo_statuses():
     assert doing_items[1].status == 'Doing'
 
     assert len(todo_items) == 3
-    assert todo_items[0-2].status == 'To Do'
+    for i in range(3):
+        assert todo_items[i].status == 'To Do'
 

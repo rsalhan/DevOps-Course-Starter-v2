@@ -58,7 +58,7 @@ def todo_list():
     for each_todoitem in todo_json:
         item = Item.from_trello_card(each_todoitem, 'To Do')
         items_list.append(item)
-    print(f"--> DONE items_list: {items_list}")
+    # print(f"--> DONE items_list: {items_list}")
     return items_list
 
 def doing_list():
@@ -73,7 +73,6 @@ def doing_list():
     for each_doingitem in doing_json:
         item = Item.from_trello_card(each_doingitem, 'Doing')
         items_list.append(item)
-    print(f"--> DOING items_list: {items_list}")
     return items_list
 
 def done_list():
@@ -88,7 +87,6 @@ def done_list():
     for each_doneitem in done_json:
         item = Item.from_trello_card(each_doneitem, 'Done')
         items_list.append(item)
-    print(f"--> DONE items_list: {items_list}")
     return items_list
 
 def move_to_todo():

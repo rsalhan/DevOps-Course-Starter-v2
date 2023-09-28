@@ -53,7 +53,7 @@ def todo_list():
     print(f"--> todo_list URL: {todo_url}")
     todo_response = requests.request("GET", todo_url, headers=headers(), params=query_params)
     todo_json = todo_response.json()
-    print(todo_json)
+    # print(todo_json)
     items_list = []
     for each_todoitem in todo_json:
         item = Item.from_trello_card(each_todoitem, 'To Do')
@@ -68,7 +68,6 @@ def doing_list():
     print(f"--> doing_list URL: {doing_url}")
     doing_response = requests.request("GET", doing_url, headers=headers(), params=query_params)
     doing_json = doing_response.json()
-    print(doing_json)
     items_list = []
     for each_doingitem in doing_json:
         item = Item.from_trello_card(each_doingitem, 'Doing')
@@ -82,7 +81,6 @@ def done_list():
     print(f"--> done_list URL: {done_url}")
     done_response = requests.request("GET", done_url, headers=headers(), params=query_params)
     done_json = done_response.json()
-    print(done_json)
     items_list = []
     for each_doneitem in done_json:
         item = Item.from_trello_card(each_doneitem, 'Done')

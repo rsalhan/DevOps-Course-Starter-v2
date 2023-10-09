@@ -127,6 +127,3 @@
       daemon_reload: true
       state: restarted #reloaded #stopped #started
     become: yes
-
-    # journalctl -u todoapp
-    # http://3.77.132.88:5000/

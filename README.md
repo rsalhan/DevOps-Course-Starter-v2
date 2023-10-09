@@ -82,3 +82,24 @@ Please also review `app.py` as well as `test_app.py` which will pull your test e
 ## Executing Unit/Integration Test
 
 Please execute `poetry run pytest` from a terminal ensuring you at the correct path/level.
+
+
+## Run Ansible Playbook
+
+Navigate to relevant folder on the the controller and run `ansible-playbook ansible-playbook.yml -i ansible-inventory`.
+
+
+## Start the App
+
+If all the previous Ansible tasks ran successfully, you should be able to manually start up the app and visit the site in your browser:
+
+* Connect to the host/managed node
+* Navigate to the project folder by running cd /opt/todoapp
+* Run `poetry run flask run --host 0.0.0.0`
+* Open up a browser on your own computer and navigate to http://host.ip.address:5000/ (e.g. http://3.77.132.88:5000/)
+
+
+## View Logs for systemmd Task
+
+To view the logs for your systemd task, SSH onto the managed node and run `journalctl -u todoapp`.
+

@@ -99,7 +99,7 @@ If all the previous Ansible tasks ran successfully, you should be able to manual
 * Open up a browser on your own computer and navigate to http://host.ip.address:5000/ (e.g. http://3.77.132.88:5000/)
 
 
-## View Logs for systemmd Task
+## View Logs for Systemd Task
 
 To view the logs for your systemd task, SSH onto the managed node and run `journalctl -u todoapp`.
 

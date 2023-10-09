@@ -5,32 +5,30 @@
   vars_prompt:
     - name: trello_api_key
       prompt: Trello API key?
-      default: "1"
       private: true
 
     - name: trello_token
       prompt: Trello token?
-      default: "2"
       private: true
 
     - name: trello_board_id
       prompt: Trello Board ID?
-      default: "3"
+      default: "64af2a2305103833247f0e3c"
       private: false
 
     - name: trello_todo_idlist
       prompt: Trello ToDo List ID?
-      default: "4"
+      default: "64af2a2305103833247f0e44"
       private: false
 
     - name: trello_doing_idlist
       prompt: Trello Doing List ID?
-      default: "5"
+      default: "64af2a2305103833247f0e45"
       private: false
 
     - name: trello_done_idlist
       prompt: Trello Done List ID?
-      default: "6"
+      default: "64af2a2305103833247f0e46"
       private: false
 
   tasks:
@@ -127,6 +125,3 @@
       daemon_reload: true
       state: restarted #reloaded #stopped #started
     become: yes
-
-    # journalctl -u todoapp
-    # http://3.77.132.88:5000/

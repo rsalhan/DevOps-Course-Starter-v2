@@ -1,0 +1,132 @@
+---
+- name: Install To-Do App on new web server
+  hosts: managednodes
+  remote_user: ec2-user
+  vars_prompt:
+    - name: trello_api_key
+      prompt: Trello API key?
+      default: "1"
+      private: true
+
+    - name: trello_token
+      prompt: Trello token?
+      default: "2"
+      private: true
+
+    - name: trello_board_id
+      prompt: Trello Board ID?
+      default: "3"
+      private: false
+
+    - name: trello_todo_idlist
+      prompt: Trello ToDo List ID?
+      default: "4"
+      private: false
+
+    - name: trello_doing_idlist
+      prompt: Trello Doing List ID?
+      default: "5"
+      private: false
+
+    - name: trello_done_idlist
+      prompt: Trello Done List ID?
+      default: "6"
+      private: false
+
+  tasks:
+  - name: Install Git + Python via Yum Package Manager
+    ansible.builtin.yum:
+      name: 
+        - git
+        - python3
+      state: latest #present
+    become: yes
+
+  - name: Update Installed Packages via Yum
+    ansible.builtin.command: sudo yum update -y
+
+  - name: Install Development Tools via Yum
+    ansible.builtin.command: sudo yum groupinstall "Development Tools" -y 
+
+  - name: Install Python Dependencies via Yum
+    ansible.builtin.command: sudo yum install libffi-devel bzip2-devel wget openssl11-devel -y 
+
+  - name: Download Python v3.10.2
+    ansible.builtin.command: 
+      cmd: wget https://www.python.org/ftp/python/3.10.2/Python-3.10.2.tgz
+      creates: /home/ec2-user/Python-3.10.2.tgz
+
+  - name: Unzip Python v3.10.2
+    ansible.builtin.command: 
+      cmd: tar -xf Python-3.10.2.tgz
+      creates: /home/ec2-user/Python-3.10.2
+
+  - name: 'Python v3.10.2 Install: part 1'
+    ansible.builtin.command: 
+      cmd: sudo ./configure --enable-optimizations
+      chdir: /home/ec2-user/Python-3.10.2
+
+  - name: 'Python v3.10.2 Install: part 2'
+    ansible.builtin.shell: 
+      cmd: sudo make -j $(nproc)
+      chdir: /home/ec2-user/Python-3.10.2
+
+  - name: 'Python v3.10.2 Install: part 3'
+    ansible.builtin.shell: 
+      # cmd: sudo make altinstall
+      cmd: sudo make install
+      chdir: /home/ec2-user/Python-3.10.2
+      creates: /usr/local/bin/python3.10
+    become: yes
+
+  - name: Create directory for the To-Do App code
+    ansible.builtin.file:
+      path: /opt/todoapp
+      state: directory
+      owner: ec2-user
+      group: ec2-user
+      mode: '744'
+
+  - name: Install Poetry
+    ansible.builtin.shell:
+      cmd: curl -sSL https://install.python-poetry.org | python3 -
+      creates: /home/ec2-user/.local/bin/poetry
+    become: yes
+
+  - name: "Checkout ToDo App - Branch: M4_Trello"
+    ansible.builtin.git:
+      repo: https://github.com/rsalhan/DevOps-Course-Starter-v2.git
+      dest: /opt/todoapp
+      version: M4_Trello 
+      force: yes
+    become: yes
+
+  - name: Install Project Dependencies
+    ansible.builtin.shell:
+      cmd: /home/ec2-user/.local/bin/poetry install 
+      chdir: /opt/todoapp
+    become: yes
+
+  - name: Create a .env file on the host
+    ansible.builtin.template:
+      src: /home/ec2-user/.env.j2
+      dest: /opt/todoapp/.env
+      mode: '644' 
+
+  - name: Copy todoapp.service
+    ansible.builtin.template:
+      src: /home/ec2-user/todoapp.service
+      dest: /etc/systemd/system/todoapp.service
+      group: ec2-user
+      mode: '744'
+    become: yes
+
+  - name: Start ToDo App
+    ansible.builtin.systemd:
+      name: todoapp.service
+      daemon_reload: true
+      state: restarted #reloaded #stopped #started
+    become: yes
+
+    # journalctl -u todoapp
+    # http://3.77.132.88:5000/

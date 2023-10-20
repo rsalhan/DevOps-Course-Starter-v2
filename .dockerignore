@@ -1,0 +1,11 @@
+# .env
+# .venv
+.git
+.vscode
+ansible-inventory.ini
+ansible-playbook.yml
+test_app.py
+test_view_mdodel.py
+Dockerfile
+
+

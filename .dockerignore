@@ -1,5 +1,5 @@
-# .env
-# .venv
+.env
+.venv
 .git
 .vscode
 ansible-inventory.ini

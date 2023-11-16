@@ -103,3 +103,26 @@ If all the previous Ansible tasks ran successfully, you should be able to manual
 
 To view the logs for your systemd task, SSH onto the managed node and run `journalctl -u todoapp`.
 
+
+## Build Dev/Prod Containers
+
+The following commands can be run to build Production and Development containers for the ToDo App:
+
+* `docker build --target production --tag rsalhan/todo-app:prod .`
+* `docker build --target development --tag rsalhan/todo-app:dev .`
+
+
+## Run Dev/Prod Containers
+
+Once built, the containers can be run using the following:
+
+* `docker run -it --env-file .env -p 8000:8000 rsalhan/todo-app:prod`
+* `docker run -it --env-file ./.env -p 5000:5000 --mount type=bind,source="$(pwd)"/todo_app,target=/app/todo_app rsalhan/todo-app:dev`
+
+
+## Accessing Docker/Containerised ToDo App
+
+Depending on whether you wish to access the Prod or Dev version, navigate to the relevant URL below on your local machine:
+
+* Production URL: http://localhost:8000/
+* Development URL: http://127.0.0.1:5000/

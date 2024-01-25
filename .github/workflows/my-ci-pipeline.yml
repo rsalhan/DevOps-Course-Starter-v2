@@ -1,0 +1,10 @@
+name: Continuous Integration # Workflow display name
+on: [push]      # Will make the workflow run every time you push to any branch
+
+jobs:
+  build:
+    name: Build and test # Job display name
+    runs-on: ubuntu-latest # Sets the build environment
+    steps:
+    - uses: actions/checkout@v2 # Name of step
+    - run: echo Hello World # Command to run

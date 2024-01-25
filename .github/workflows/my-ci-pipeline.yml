@@ -1,17 +1,17 @@
-name: Continuous Integration # Workflow display name
-on: [push]      # Will make the workflow run every time you push to any branch
+name: Continuous Integration
+on: [push]      
 
 jobs:
   build:
-    name: Build and test # Job display
-    runs-on: ubuntu-latest # Sets the build environment
+    name: Build and test
+    runs-on: ubuntu-latest
     
     steps:
     - name: Checkout Code
-      uses: actions/checkout@v2 # Name of step
+      uses: actions/checkout@v2
 
-    - name: Build Docker Image
+    - name: Build Docker Test Image
       run: docker build --target test --tag my-test-image .
 
-    - name: Run Unit + Integration Tests
+    - name: Run Docker Test Image + Unit/Integration Tests
       run: docker run my-test-image

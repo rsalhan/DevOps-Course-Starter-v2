@@ -3,8 +3,15 @@ on: [push]      # Will make the workflow run every time you push to any branch
 
 jobs:
   build:
-    name: Build and test # Job display name
+    name: Build and test # Job display
     runs-on: ubuntu-latest # Sets the build environment
+    
     steps:
-    - uses: actions/checkout@v2 # Name of step
-    - run: echo Hello World # Command to run
+    - name: Checkout Code
+      uses: actions/checkout@v2 # Name of step
+
+    - name: Build Docker Image
+      run: docker build --target test --tag my-test-image .
+
+    - name: Run Unit + Integration Tests
+      run: docker run my-test-image

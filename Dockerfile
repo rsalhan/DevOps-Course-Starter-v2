@@ -44,5 +44,4 @@ ENV WEBAPP_PORT=6000
 EXPOSE ${WEBAPP_PORT}
 
 # TEST - ENTRYPOINT/CMD
-# ENTRYPOINT poetry run pytest
 ENTRYPOINT ["poetry", "run", "pytest"]

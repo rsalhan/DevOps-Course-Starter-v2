@@ -126,3 +126,13 @@ Depending on whether you wish to access the Prod or Dev version, navigate to the
 
 * Production URL: http://localhost:8000/
 * Development URL: http://127.0.0.1:5000/
+
+Please note: the loop back address referenced in the above URL is another way of routing traffic to loop back to the local host.
+
+
+## Build/Run Docker Test Image + Unit/Integration Tests
+
+The following commands can be used to build and run the Docket Test Image whilst also running the Unit and Integration tests:
+
+* `docker build --target test --tag my-test-image .`
+* `docker run my-test-image`

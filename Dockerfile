@@ -35,3 +35,14 @@ EXPOSE ${WEBAPP_PORT}
 
 # DEV - ENTRYPOINT/CMD
 ENTRYPOINT ["poetry", "run", "flask", "run", "--host", "0.0.0.0"]
+
+# TEST CONTAINER==========================================================================
+FROM base as test
+
+# TEST - EXPOSE PORT 
+ENV WEBAPP_PORT=6000
+EXPOSE ${WEBAPP_PORT}
+
+# TEST - ENTRYPOINT/CMD
+# ENTRYPOINT poetry run pytest
+ENTRYPOINT ["poetry", "run", "pytest"]

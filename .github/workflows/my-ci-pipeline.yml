@@ -1,0 +1,23 @@
+name: Continuous Integration
+on:
+  push:
+    paths-ignore:
+      - 'README.md'
+  pull_request:
+    paths-ignore:
+      - 'README.md'
+    
+jobs:
+  build:
+    name: Build and test
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Build Docker Test Image
+      run: docker build --target test --tag my-test-image .
+
+    - name: Run Docker Test Image + Unit/Integration Tests
+      run: docker run my-test-image

@@ -132,7 +132,85 @@ Please note: the loop back address referenced in the above URL is another way of
 
 ## Build/Run Docker Test Image + Unit/Integration Tests
 
-The following commands can be used to build and run the Docket Test Image whilst also running the Unit and Integration tests:
+The following commands can be used to build and run the Docker Test Image whilst also running the Unit and Integration tests:
 
 * `docker build --target test --tag my-test-image .`
 * `docker run my-test-image`
+
+
+## Deployment - Step 1: Put Container Image on Docker Hub registry
+
+Authenticate with Azure CLI:
+
+* `az login --use-device-code`
+
+Log into DockerHub locally and then authenticate using Docker username/password when prompted:
+
+* `docker login`
+
+Build the image:
+
+* `docker build --target production --tag <DH_user_name>/<image_name>:<tag> docker login .`
+
+Push the image whilst substituting in your own personal values:
+
+* `docker push <DH_user_name>/<image_name>:<tag>`
+
+
+## Deployment - Step 2: Create a Web App
+
+The following commands will be need to be completed in sequence...
+
+Create an App Service Plan:
+
+* `az appservice plan create --resource-group <resource_group_name> -n <appservice_plan_name> --sku B1 --is-linux`
+
+Create the Web App:
+
+* `az webapp create --resource-group <resource_group_name> --plan <appservice_plan_name> --name <webapp_name> --deployment-container-image-name docker.io/<dockerhub_username>/<container-image-name>:latest`
+
+Note: your <webapp_name> needs to be globally unique, and will form part of the URL of your deployed app: https://<webapp_name>.azurewebsites.net.
+
+
+## Deployment - Step 3: Set up environment variables
+
+Environment variables also need to be added, this can be done manually in Azure Portal or via CLI.
+
+Portal - navigate to the following sections and add all the env variables:
+
+* Settings -> Configuration
+* Add all environment variables as "New application setting"
+
+CLI - enter them individually using the following command, ensuring you pass across your RG name and Web App name, the following are a few examples:
+* `az webapp config appsettings set -g <resource_group_name> -n <webapp_name> --settings FLASK_APP=todo_app/app.`
+* `az webapp config appsettings set -g <resource_group_name> -n <webapp_name> --settings FLASK_DEBUG=true`
+* `az webapp config appsettings set -g <resource_group_name> -n <webapp_name> --settings SECRET_KEY=secret-key`
+* `az webapp config appsettings set -g <resource_group_name> -n <webapp_name> --settings BASE_URL=https://api.trello.com/1/`
+
+Please note: there is also a third option you can pass in a JSON file containing all variables by using --settings @foo.json
+
+
+## Deployment - Step 4: Confirm the live site works
+
+* Browse to http://<webapp_name>.azurewebsites.net/ and confirm no functionality has been lost.
+* See if the image has successfully been pulled from the Deployment Center’s “Logs” tab
+* See if the application “Log Stream” (not the “Logs”) shows any hints on what might be going wrong
+
+
+## Deployment - Step 5: Update the container
+
+Find your webhook URL:
+* This can located under Deployment Center on the app service’s page in the Azure portal.
+
+Test your webhook:
+* Take the webhook provided by the previous step, add in a backslash to escape the $, and run: curl -dH -X POST "`<webhook>`"
+* eg: `curl -dH -X POST "https://\$<deployment_username>:<deployment_password>@<webapp_name>.scm.azurewebsites.net/docker/hook"`
+* This should return a link to a log-stream relating to the re-pulling of the image and restarting the app.
+
+Please note: The webhook URL contains a dollar sign which should be escaped (`\$`) to prevent it being interpreted as an attempt to reference an environment variable.
+
+## Accessing Deployed App
+
+The deployed app can be accessed via the following URL:
+* URL: https://RS-M8-ToDoApp.azurewebsites.net/
+

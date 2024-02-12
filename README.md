@@ -212,5 +212,5 @@ Please note: The webhook URL contains a dollar sign which should be escaped (`\$
 ## Accessing Deployed App
 
 The deployed app can be accessed via the following URL:
-* URL: https://RS-M8-ToDoApp.azurewebsites.net/
+* https://RS-M8-ToDoApp.azurewebsites.net/
 

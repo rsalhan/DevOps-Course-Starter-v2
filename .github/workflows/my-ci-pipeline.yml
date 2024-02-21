@@ -35,8 +35,8 @@ jobs:
     - name: DockerHub Login
       uses: docker/login-action@v3
       with:
-        username: ${{ secrets.DH_username }}
-        password: ${{ secrets.DH_passowrd }}
+        username: ${{ secrets.DH_USERNAME }}
+        password: ${{ secrets.DH_TOKEN }}
 
 
 

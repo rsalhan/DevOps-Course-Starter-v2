@@ -31,3 +31,12 @@ jobs:
     steps:
     - name: Echo
       run: echo Publishing!
+
+    - name: DockerHub Login
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DH_username }}
+        password: ${{ secrets.DH_passowrd }}
+
+
+

@@ -47,4 +47,4 @@ jobs:
     - name: curl Command
       env:
         webhook_url: ${{ secrets.WEBHOOK_URL }}
-      run: curl --fail -dH -X POST '$webhook_url'
+      run: curl --fail --ssl-no-revoke -dH -X POST '$webhook_url'

@@ -44,6 +44,15 @@ jobs:
         push: true
         tags: rsalhan/m9-exercise:latest
 
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Build Docker Prod Image v2
+      run: docker build --target production --tag rsalhan/m9-exercise2:latest .
+
+    - name: Push Docker Prod Image v2
+      run: docker push rsalhan/m9-exercise2:latest
+
     - name: curl Command
       env:
         webhook_url: ${{ secrets.WEBHOOK_URL }}

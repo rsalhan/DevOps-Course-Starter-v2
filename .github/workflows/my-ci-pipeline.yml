@@ -44,7 +44,7 @@ jobs:
         push: true
         tags: rsalhan/m9-exercise:latest
 
-    - name: Curl Command
+    - name: curl Command
       env:
         webhook_url: ${{ secrets.WEBHOOK_URL }}
-      run: curl -dH -X POST '$'
+      run: curl --fail -dH -X POST '$webhhok_url'

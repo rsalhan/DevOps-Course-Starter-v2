@@ -44,12 +44,6 @@ jobs:
         push: true
         tags: rsalhan/m9-exercise:latest
 
-    - name: Build Docker Prod Image
-      run: docker build --target production --tag rsalhan/m9-exercise2:latest .
-
-    - name: Push Docker Prod Image
-      run: docker push rsalhan/m9-exercise2:latest
-
     - name: Curl Command
       env:
         webhook_url: ${{ secrets.WEBHOOK_URL }}

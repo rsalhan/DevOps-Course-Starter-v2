@@ -38,5 +38,11 @@ jobs:
         username: ${{ secrets.DH_USERNAME }}
         password: ${{ secrets.DH_TOKEN }}
 
+    - name: Build and push
+      uses: docker/build-push-action@v5
+      with:
+        push: true
+        tags: rsalhan/m9-exercise:prod
+
 
 

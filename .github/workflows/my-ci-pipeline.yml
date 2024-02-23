@@ -43,6 +43,7 @@ jobs:
       with:
         push: true
         tags: rsalhan/m9-exercise:latest
+        target: production
 
     - name: Checkout Code
       uses: actions/checkout@v2
@@ -56,4 +57,4 @@ jobs:
     - name: curl Command
       env:
         webhook_url: ${{ secrets.WEBHOOK_URL }}
-      run: curl --fail --ssl-no-revoke -dH -X POST $webhook_url
+      run: curl --fail -dH -X POST $webhook_url

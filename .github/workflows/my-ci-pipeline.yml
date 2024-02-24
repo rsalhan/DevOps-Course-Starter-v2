@@ -29,9 +29,6 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/M9'
 
     steps:
-    - name: Echo
-      run: echo Publishing!
-
     - name: DockerHub Login
       uses: docker/login-action@v3
       with:

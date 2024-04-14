@@ -214,3 +214,17 @@ Please note: The webhook URL contains a dollar sign which should be escaped (`\$
 The deployed app can be accessed via the following URL:
 * https://RS-M8-ToDoApp.azurewebsites.net/
 
+
+## GitHub Actions
+
+Your GitHub Actions workflow now has a deployment section, which:
+* Pushes a production image to Docker Hub
+* Doesn’t reveal any secret values
+* Only deploys if your tests pass and can be configured to only run for updates to the main branch
+* Releases the latest image to Azure
+
+Whenever your application is committed, it will also be tested, to view the results navigate to:
+
+* https://github.com/GitHubAccount/repo/actions
+
+Please substitute in your own GitHub account and repository name into the above URL to access the relevant GitHub Actions section.

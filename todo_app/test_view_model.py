@@ -1,4 +1,5 @@
-from todo_app.data.trello_items import Item
+# from todo_app.data.trello_items import Item
+from todo_app.data.mongo_db_items import Item
 from todo_app.view_model import ViewModel
 
 def test_view_model_done_doing_todo_statuses():

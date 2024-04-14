@@ -51,10 +51,11 @@ def client():
 
 #     raise Exception(f'Integration test did not expect URL "{url}"')
 
-def test_index_page(monkeypatch, client):
+# def test_index_page(monkeypatch, client):
     # Replace requests.get(url) with our own function
     # monkeypatch.setattr(requests, 'request', stub)
 
+def test_index_page(monkeypatch, client):
     mongo_db_connection = os.getenv("MONGOMOCK_DB_CONNECTION_STRING")
     mongo_db_name = os.getenv("MONGOMOCK_DB_NAME")
     client = pymongo.MongoClient(mongo_db_connection)

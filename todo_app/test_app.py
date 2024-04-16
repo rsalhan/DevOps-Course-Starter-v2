@@ -1,5 +1,5 @@
 from flask.testing import FlaskClient
-import os, pytest, requests, mongomock, pymongo
+import os, pytest, mongomock, pymongo
 from todo_app import app
 from dotenv import load_dotenv, find_dotenv
 
@@ -10,17 +10,11 @@ def client():
     load_dotenv(file_path, override=True)
 
     with mongomock.patch(servers=(('fakemongo.com', 27017),)):
+        # Create the new app.
         test_app = app.create_app()
+        # Use the app to create a test_client that can be used in our tests.
         with test_app.test_client() as client:
             yield client
-
-    # # Create the new app.
-    # test_app = app.create_app()
-
-    # # Use the app to create a test_client that can be used in our tests.
-    # with test_app.test_client() as client:
-    #     yield client
-
 
 def test_index_page(client: FlaskClient):
     mongo_db_connection = os.getenv("MONGO_DB_CONNECTION_STRING")
@@ -34,11 +28,7 @@ def test_index_page(client: FlaskClient):
     todo_3 = {"name": "Module 09", "status": "Done"}
 
     collection.insert_many([todo_1, todo_2, todo_3])
-
-    # Make a request to our app's index page
     response = client.get('/')
 
     assert response.status_code == 200
     assert 'Module 11' in response.data.decode()
-    # assert 'Module 11' in response.data
-

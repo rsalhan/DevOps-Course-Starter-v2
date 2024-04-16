@@ -46,10 +46,10 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Build Docker Prod Image v2
-      run: docker build --target production --tag rsalhan/m8-todo-app:prod .
+      run: docker build --target production --tag rsalhan/m8-todo-app:latest .
 
     - name: Push Docker Prod Image v2
-      run: docker push rsalhan/m8-todo-app:prod
+      run: docker push rsalhan/m8-todo-app:latest
 
     - name: curl Command
       env:

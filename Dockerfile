@@ -1,5 +1,5 @@
 # BASE IMAGE
-FROM python:latest as base
+FROM python:3.11 as base
 
 # UPDATE IMAGE/UPGRADE PIP/INSTALL POETRY
 RUN apt-get update && pip install --upgrade pip && pip install poetry --no-cache-dir

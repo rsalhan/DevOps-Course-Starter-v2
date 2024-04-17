@@ -4,14 +4,14 @@ from bson.objectid import ObjectId
 
 def connect_to_mongo_db():
     mongo_db_connection = os.getenv("MONGO_DB_CONNECTION_STRING")
-    mongo_db_name = os.getenv("MONGO_DB_NAME")
+    # mongo_db_name = os.getenv("MONGO_DB_NAME")
     dbclient = pymongo.MongoClient(mongo_db_connection)
-    db = dbclient[mongo_db_name]
-    collection = db["collection1"]
+    db = dbclient.rsdb01 #[mongo_db_name]
+    collection = db.collection1 #["collection1"]
     list_collections = db.list_collection_names()
 
     print(f"Mongo DB CS: {mongo_db_connection}")
-    print(f"Mongo DB Name: {mongo_db_name}")
+    # print(f"Mongo DB Name: {mongo_db_name}")
     print(f"List DB names: {dbclient.list_database_names()}")
     print(f"DB: {db}")
     print(f"List collection names: {list_collections}")

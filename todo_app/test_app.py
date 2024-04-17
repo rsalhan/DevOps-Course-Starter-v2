@@ -18,10 +18,10 @@ def client():
 
 def test_index_page(client: FlaskClient):
     mongo_db_connection = os.getenv("MONGO_DB_CONNECTION_STRING")
-    # mongo_db_name = os.getenv("MONGO_DB_NAME")
+    mongo_db_name = os.getenv("MONGO_DB_NAME")
     dbclient = pymongo.MongoClient(mongo_db_connection)
-    db = dbclient.rsdb01 #[mongo_db_name]
-    collection = db.collection1 ["collection1"]
+    db = dbclient[mongo_db_name]
+    collection = db["collection1"]
     
     todo_1 = {"name": "Module 11", "status": "To Do"}
     todo_2 = {"name": "Module 10", "status": "Doing"}

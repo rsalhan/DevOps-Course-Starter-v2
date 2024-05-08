@@ -1,4 +1,4 @@
-from todo_app.data.trello_items import Item
+from todo_app.data.mongo_db_items import Item
 
 class ViewModel:  
     def __init__(self, retrieve_todo: list[Item], retrieve_doing: list[Item], retrieve_done: list[Item]):

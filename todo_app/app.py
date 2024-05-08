@@ -1,10 +1,10 @@
-from todo_app.data.trello_items import add_card, todo_list, doing_list, done_list, move_to_todo, move_to_doing, move_to_done
+from todo_app.data.mongo_db_items import add_card, todo_list, doing_list, done_list, move_to_todo, move_to_doing, move_to_done
 from todo_app.view_model import ViewModel
 
 from flask import Flask, render_template, redirect
 from todo_app.flask_config import Config
 
-def create_app():
+def create_app():   
     app = Flask(__name__)
     app.config.from_object(Config())
 

@@ -214,3 +214,98 @@ Please note: The webhook URL contains a dollar sign which should be escaped (`\$
 The deployed app can be accessed via the following URL:
 * https://RS-M8-ToDoApp.azurewebsites.net/
 
+
+## GitHub Actions
+
+Your GitHub Actions workflow now has a deployment section, which:
+* Pushes a production image to Docker Hub
+* Doesn’t reveal any secret values
+* Only deploys if your tests pass and can be configured to only run for updates to the main branch
+* Releases the latest image to Azure
+
+Whenever your application is committed, it will also be tested, to view the results navigate to:
+
+* https://github.com/GitHubAccount/repo/actions
+
+Please substitute in your own GitHub account and repository name into the above URL to access the relevant GitHub Actions section.
+
+
+## MongoDB - create database
+
+Create an Azure CosmosDB database to go alongside our existing App Service, this can be done via the Portal or using CLI.
+
+Portal
+* New -> CosmosDB Database
+* Select “Azure Cosmos DB API for MongoDB”
+* Choose “Serverless” for Capacity mode
+* You can also configure secure firewall connections, but for now you should permit access from “All Networks” to enable easier testing of the integration with the app.
+
+CLI
+* Create new CosmosDB account: `az cosmosdb create --name <cosmos_account_name> --resource-group <resource_group_name> --kind MongoDB --capabilities EnableServerless --server-version 3.6`
+* Create new MongoDB database under that account: `az cosmosdb mongodb database create --account-name <cosmos_account_name> --name <database_name> --resource-group <resource_group_name>`
+
+Please note: it may take a few mins for your cluster to spin up, you'll need to wait for it to finish deploying.
+
+
+## MongoDB - install PyMongo
+
+Python support for MongoDB comes in the form of PyMongo - this project dependency can be added via the below:
+
+* `poetry add pymongo`
+
+Once installed you should be able to interact with MongoDB from the Python shell in VS Code:
+* Open the VS Code terminal.
+* Type `poetry run python` to open the Python shell
+* Type `import pymongo`
+
+If at this point you do not receive an error then you have successfully installed PyMongo.
+
+Please note: as PyMongo has already been added as a project dependency to `pyproject.toml`, running a `poetry install` will suffice.
+
+
+## MongoDB - connecting to CosmosDB
+
+First copy the PRIMARY CONNECTION STRING for your CosmosDB cluster, available under Settings -> Connection String from your CosmosDB account page in the Azure portal, or via the CLI: 
+* `az cosmosdb keys list -n <cosmos_account_name> -g <resource_group_name> --type connection-strings`
+
+## MongoDB - replacing Trello
+
+You should be able to copy the data access code you’ve written for Trello and rewrite it to target MongoDB instead. You will need an environment variable for the connection string, and we suggest adding one for the database name as well.
+
+View model tests should not need any changes, but here is some advice on updating the integration.
+
+## MongoDB - Integration tests
+
+You will need to update how the integration tests are providing fake data, this can be done using the mongomock library:
+
+* `poetry add mongomock`
+
+You can use it to provide a fake Mongo database. First, set the connection string environment variable in .env.test equal to mongodb://fakemongo.com. Next, update your test setup as follows:
+
+    import mongomock
+
+    @pytest.fixture
+    def client():
+        file_path = find_dotenv('.env.test')
+        load_dotenv(file_path, override=True)
+
+        with mongomock.patch(servers=(('fakemongo.com', 27017),)):
+            test_app = app.create_app()
+            with test_app.test_client() as client:
+                yield client
+
+Your integration test can now use `pymongo.MongoClient` to connect and insert dummy data as if it were interacting with a real database. Delete any code related to mocking `requests.get`.
+
+## MongoDB - update CI/CD
+
+Once you’ve finished the code changes you’ll need to check your CI/CD pipeline and deployed application both work. 
+
+At the very least, you need to `provide your App Service with any new environment variables` required to connect to CosmosDB.
+
+## MongoDB - final checks
+
+Finally please ensure:
+* your local build still works
+* CI/CD pipeline is still showing as green in GitHub Actions
+* the Prod deployed Azure environment is still available
+

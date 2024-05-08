@@ -260,6 +260,9 @@ Once installed you should be able to interact with MongoDB from the Python shell
 
 If at this point you do not receive an error then you have successfully installed PyMongo.
 
+Please note: as PyMongo has already been added as a project dependency to `pyproject.toml`, running a `poetry install` will suffice.
+
+
 ## MongoDB - connecting to CosmosDB
 
 First copy the PRIMARY CONNECTION STRING for your CosmosDB cluster, available under Settings -> Connection String from your CosmosDB account page in the Azure portal, or via the CLI: 

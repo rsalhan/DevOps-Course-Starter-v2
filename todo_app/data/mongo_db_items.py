@@ -8,14 +8,6 @@ def connect_to_mongo_db():
     dbclient = pymongo.MongoClient(mongo_db_connection)
     db = dbclient[mongo_db_name]
     collection = db["collection1"]
-    list_collections = db.list_collection_names()
-
-    print(f"Mongo DB CS: {mongo_db_connection}")
-    print(f"Mongo DB Name: {mongo_db_name}")
-    print(f"List DB names: {dbclient.list_database_names()}")
-    print(f"DB: {db}")
-    print(f"List collection names: {list_collections}")
-    print(f"Collection: {collection}")
 
     return collection
 

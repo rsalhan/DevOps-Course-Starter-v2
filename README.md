@@ -304,5 +304,5 @@ At the very least, you need to `provide your App Service with any new environmen
 Finally please ensure:
 * your local build still works
 * CI/CD pipeline is still showing as green in GitHub Actions
-* the Prod deployed Azuer environment is still avaliable
+* the Prod deployed Azure environment is still available
 

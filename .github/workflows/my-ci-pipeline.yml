@@ -22,6 +22,10 @@ jobs:
     - name: Run Docker Test Image + Unit/Integration Tests
       run: docker run my-test-image
 
+    - name: Run Docker Test Image + Dependency Check
+      run: docker run --entrypoint poetry my-test-image run safety check
+      continue-on-error: true
+
   job-two:
     name: Deploy Prod
     runs-on: ubuntu-latest

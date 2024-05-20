@@ -4,8 +4,6 @@ from todo_app import app
 from dotenv import load_dotenv, find_dotenv
 from flask_dance.consumer.storage import MemoryStorage
 from todo_app.oauth import blueprint
-# from flask_dance.contrib.github import github
-# from pytest import MonkeyPatch
 
 @pytest.fixture
 def client(monkeypatch): #def client():

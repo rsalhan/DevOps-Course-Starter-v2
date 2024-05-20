@@ -47,7 +47,7 @@ jobs:
     #     target: production
 
     - name: Checkout Code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Build Docker Prod Image v2
       run: docker build --target production --tag rsalhan/m8-todo-app:prod .

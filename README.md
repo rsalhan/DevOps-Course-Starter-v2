@@ -323,14 +323,30 @@ To ensure your application is only accessible over HTTPS, the following setting 
 
 ## Security - Encryption-at-rest/in-transit
 
-Data held within Azure Cosmos DB is encrypted in transit (over the network) and at rest (non-volatile storage), providing end-to-end encryption. As all user data stored in Cosmos DB is encrypted at rest and in transport, you don't have to take any action. Encryption at rest is "on" by default, and there is no mechanism to turn it off or on. Azure Cosmos DB uses AES-256 encryption on all regions where the account is running.
+Data held within Azure Cosmos DB is encrypted in transit (over the network) and at rest (non-volatile storage), providing end-to-end encryption. As all user data stored in Cosmos DB is encrypted at rest and in transport, no further action is required. Encryption at rest is "on" by default, and there is no mechanism to turn it off or on. Azure Cosmos DB uses AES-256 encryption on all regions where the account is running.
 
 For more info, please review the following:
 
 * https://learn.microsoft.com/en-us/azure/cosmos-db/database-encryption-at-rest
 
 
+## Security - Dependency Checking
+
+A dependency checker named Safety has been added to the CI pipeline, this will provide regular security related feedback regarding the libraries in use. 
+
+The project dependency can be added via the below:
+
+* `poetry add safety`
+
+A manual dependency check can be carried out using the following:
+
+* `poetry run safety check`
+
+Any vulnerable libraries can in-turn be manually upgraded to the latest version via Poetry:
+
+* `poetry update <library>`
 
 
+## Security - OAuth via Flask Dance
 
-
+OAuth has been implemented to ensure access to the app is only available to those who have sucessfully authenticated via their GitHub account.

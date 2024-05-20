@@ -6,7 +6,7 @@ from flask_dance.consumer.storage import MemoryStorage
 from todo_app.oauth import blueprint
 
 @pytest.fixture
-def client(monkeypatch): #def client():
+def client(monkeypatch):
     # Use our test integration config instead of the 'real' version
     file_path = find_dotenv('.env.test')
     load_dotenv(file_path, override=True)

@@ -2,12 +2,17 @@ from flask.testing import FlaskClient
 import os, pytest, mongomock, pymongo
 from todo_app import app
 from dotenv import load_dotenv, find_dotenv
+from flask_dance.consumer.storage import MemoryStorage
+from todo_app.oauth import blueprint
 
 @pytest.fixture
-def client():
+def client(monkeypatch):
     # Use our test integration config instead of the 'real' version
     file_path = find_dotenv('.env.test')
     load_dotenv(file_path, override=True)
+
+    storage = MemoryStorage({"access_token": "fake-token"})
+    monkeypatch.setattr(blueprint, 'storage', storage)
 
     with mongomock.patch(servers=(('fakemongo.com', 27017),)):
         # Create the new app.

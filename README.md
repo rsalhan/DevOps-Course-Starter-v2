@@ -268,11 +268,13 @@ Please note: as PyMongo has already been added as a project dependency to `pypro
 First copy the PRIMARY CONNECTION STRING for your CosmosDB cluster, available under Settings -> Connection String from your CosmosDB account page in the Azure portal, or via the CLI: 
 * `az cosmosdb keys list -n <cosmos_account_name> -g <resource_group_name> --type connection-strings`
 
+
 ## MongoDB - replacing Trello
 
 You should be able to copy the data access code you’ve written for Trello and rewrite it to target MongoDB instead. You will need an environment variable for the connection string, and we suggest adding one for the database name as well.
 
 View model tests should not need any changes, but here is some advice on updating the integration.
+
 
 ## MongoDB - Integration tests
 
@@ -296,11 +298,13 @@ You can use it to provide a fake Mongo database. First, set the connection strin
 
 Your integration test can now use `pymongo.MongoClient` to connect and insert dummy data as if it were interacting with a real database. Delete any code related to mocking `requests.get`.
 
+
 ## MongoDB - update CI/CD
 
 Once you’ve finished the code changes you’ll need to check your CI/CD pipeline and deployed application both work. 
 
 At the very least, you need to `provide your App Service with any new environment variables` required to connect to CosmosDB.
+
 
 ## MongoDB - final checks
 
@@ -309,3 +313,40 @@ Finally please ensure:
 * CI/CD pipeline is still showing as green in GitHub Actions
 * the Prod deployed Azure environment is still available
 
+
+## Security - Enforce HTTPS
+
+To ensure your application is only accessible over HTTPS, the following setting must be enabled in Azure Portal against:
+
+* Resource Group > App Service > Configuration > HTTPS Only = On
+
+
+## Security - Encryption-at-rest/in-transit
+
+Data held within Azure Cosmos DB is encrypted in transit (over the network) and at rest (non-volatile storage), providing end-to-end encryption. As all user data stored in Cosmos DB is encrypted at rest and in transport, no further action is required. Encryption at rest is "on" by default, and there is no mechanism to turn it off or on. Azure Cosmos DB uses AES-256 encryption on all regions where the account is running.
+
+For more info, please review the following:
+
+* https://learn.microsoft.com/en-us/azure/cosmos-db/database-encryption-at-rest
+
+
+## Security - Dependency Checking
+
+A dependency checker named Safety has been added to the CI pipeline, this will provide regular security related feedback regarding the libraries in use. 
+
+The project dependency can be added via the below:
+
+* `poetry add safety`
+
+A manual dependency check can be carried out using the following:
+
+* `poetry run safety check`
+
+Any vulnerable libraries can in-turn be manually upgraded to the latest version via Poetry:
+
+* `poetry update <library>`
+
+
+## Security - OAuth via Flask Dance
+
+OAuth has been implemented to ensure access to the app is only available to those who have sucessfully authenticated via their GitHub account.

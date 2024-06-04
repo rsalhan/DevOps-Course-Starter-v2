@@ -14,7 +14,7 @@ jobs:
     
     steps:
     - name: Checkout Code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Build Docker Test Image
       run: docker build --target test --tag my-test-image .
@@ -22,11 +22,15 @@ jobs:
     - name: Run Docker Test Image + Unit/Integration Tests
       run: docker run my-test-image
 
+    - name: Run Docker Test Image + Dependency Check
+      run: docker run --entrypoint poetry my-test-image run safety check
+      continue-on-error: true
+
   job-two:
     name: Deploy Prod
     runs-on: ubuntu-latest
     needs: build
-    if: github.event_name == 'push' && github.ref == 'refs/heads/M10'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/M11'
 
     steps:
     - name: DockerHub Login
@@ -35,15 +39,15 @@ jobs:
         username: ${{ secrets.DH_USERNAME }}
         password: ${{ secrets.DH_TOKEN }}
 
-    - name: Build and push
-      uses: docker/build-push-action@v5
-      with:
-        push: true
-        tags: rsalhan/m9-exercise:latest
-        target: production
+    # - name: Build and push
+    #   uses: docker/build-push-action@v5
+    #   with:
+    #     push: true
+    #     tags: rsalhan/m9-exercise:latest
+    #     target: production
 
     - name: Checkout Code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Build Docker Prod Image v2
       run: docker build --target production --tag rsalhan/m8-todo-app:prod .

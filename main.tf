@@ -5,6 +5,12 @@ terraform {
       version = ">= 3.8"
     }
   }
+  backend "azurerm" {
+    resource_group_name  = "Cohort28_RajSal_ProjectExercise"
+    storage_account_name = "rsm12st01"
+    container_name       = "rsm12st01container"
+    key                  = "terraform.tfstate"
+    }
 }
 
 provider "azurerm" {
@@ -83,7 +89,7 @@ resource "azurerm_cosmosdb_account" "main" {
     name = "EnableMongo"
   }
 
-  lifecycle { prevent_destroy = true }
+  # lifecycle { prevent_destroy = true }
 
   consistency_policy {
     consistency_level       = "BoundedStaleness"

@@ -80,11 +80,11 @@ jobs:
       # - name: Checkout Code
       #   uses: actions/checkout@v4
 
-      - name: TF setup
-        uses: hashicorp/setup-terraform@v1
+    - name: TF setup
+      uses: hashicorp/setup-terraform@v1
 
-      # - name: TF Init
-      #   uses: terraform init
+    # - name: TF Init
+    #   uses: terraform init
       
       # - name: TF Plan
       #   uses: terraform plan -out=tfplan

@@ -83,8 +83,8 @@ jobs:
       # - name: TF setup
       #   uses: hashicorp/setup-terraform@v1
 
-      - name: TF Init
-        uses: terraform init
+      # - name: TF Init
+      #   uses: terraform init
       
       # - name: TF Plan
       #   uses: terraform plan -out=tfplan

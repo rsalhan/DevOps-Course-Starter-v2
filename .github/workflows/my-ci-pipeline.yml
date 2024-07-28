@@ -78,7 +78,7 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
 
       # - name: TF setup
       #   uses: hashicorp/setup-terraform@v1

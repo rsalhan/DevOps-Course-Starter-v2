@@ -77,8 +77,8 @@ jobs:
       # TF_VAR_SECRET_KEY: 
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
+      # - name: Checkout Code
+      #   uses: actions/checkout@v4
 
       # - name: TF setup
       #   uses: hashicorp/setup-terraform@v1

@@ -94,5 +94,5 @@ jobs:
     - name: TF Plan
       run: terraform plan -out=tfplan
 
-    # - name: TF Apply
-    #   uses: terraform apply -auto-approve
+    - name: TF Apply
+      uses: terraform apply -auto-approve

@@ -55,12 +55,14 @@ jobs:
     - name: Push Docker Prod Image v2
       run: docker push rsalhan/m8-todo-app:prod
 
+    - run: terraform init
+
     - name: curl Command
       env:
         webhook_url: ${{ secrets.WEBHOOK_URL }}
         webhook_url2: ${{ secrets.WEBHOOK_URL2 }}
-      run: curl --fail -dH -X POST $webhook_url
-      # run: curl --fail -dH -X POST "$(terraform output -raw webhook_url2)"
+      # run: curl --fail -dH -X POST $webhook_url
+      run: curl --fail -dH -X POST "$(terraform output -raw webhook_url2)"
 
   terraform:
     name: Terraform Init/Plan/Apply

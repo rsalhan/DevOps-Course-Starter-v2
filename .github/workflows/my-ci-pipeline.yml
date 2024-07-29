@@ -85,8 +85,8 @@ jobs:
       with: 
         terraform_version: latest
 
-    # - name: TF Init
-    #   uses: terraform init
+    - name: TF Init
+      uses: terraform init
       
     # - name: TF Plan
     #   uses: terraform plan -out=tfplan

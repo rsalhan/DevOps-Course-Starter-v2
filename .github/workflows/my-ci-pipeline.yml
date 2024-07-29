@@ -82,6 +82,8 @@ jobs:
 
     - name: TF setup
       uses: hashicorp/setup-terraform@v1
+      with: 
+        terraform_version: latest
 
     # - name: TF Init
     #   uses: terraform init

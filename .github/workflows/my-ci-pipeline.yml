@@ -58,7 +58,9 @@ jobs:
     - name: curl Command
       env:
         webhook_url: ${{ secrets.WEBHOOK_URL }}
-      run: curl --fail -dH -X POST $webhook_url
+        webhook_url2: ${{ secrets.WEBHOOK_URL2 }}
+      # run: curl --fail -dH -X POST $webhook_url
+      run: curl -dH -X POST "$(terraform output -raw webhook_url2)
 
   terraform:
     name: Terraform Init/Plan/Apply
@@ -74,7 +76,8 @@ jobs:
       ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
       TF_VAR_OAUTH_CLIENT_ID: ${{ secrets.OAUTH_CLIENT_ID }}
       TF_VAR_OAUTH_CLIENT_SECRET: ${{ secrets.OAUTH_CLIENT_SECRET }}
-      TF_VAR_SECRET_KEY: ${{ secrets.SECRET_KEY  }}
+      TF_VAR_SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      WEBHOOK_URL2: ${{ secrets.WEBHOOK_URL2 }}
 
     steps:
     - name: Checkout Code
@@ -92,5 +95,4 @@ jobs:
       run: terraform plan -out=tfplan
 
     # - name: TF Apply
-    #   uses: terraform apply
-
+    #   uses: terraform apply -auto-approve

@@ -55,15 +55,6 @@ jobs:
     - name: Push Docker Prod Image v2
       run: docker push rsalhan/m8-todo-app:prod
 
-    # - run: terraform init
-
-    - name: curl Command
-      env:
-        webhook_url: ${{ secrets.WEBHOOK_URL }}
-        webhook_url2: ${{ secrets.WEBHOOK_URL2 }}
-      run: curl --fail -dH -X POST $webhook_url
-      # run: curl --fail -dH -X POST "$(terraform output -raw webhook_url2)"
-
   terraform:
     name: Terraform Init/Plan/Apply
     runs-on: ubuntu-latest
@@ -79,7 +70,6 @@ jobs:
       TF_VAR_OAUTH_CLIENT_ID: ${{ secrets.OAUTH_CLIENT_ID }}
       TF_VAR_OAUTH_CLIENT_SECRET: ${{ secrets.OAUTH_CLIENT_SECRET }}
       TF_VAR_SECRET_KEY: ${{ secrets.SECRET_KEY }}
-      WEBHOOK_URL2: ${{ secrets.WEBHOOK_URL2 }}
 
     steps:
     - name: Checkout Code
@@ -99,4 +89,4 @@ jobs:
     - name: TF Apply
       run: terraform apply -auto-approve
 
-    - run: curl --fail -dH -X POST $(terraform output -raw webhook_url2)
+    - run: curl --fail -dH -X POST $(terraform output -raw webhook_url)

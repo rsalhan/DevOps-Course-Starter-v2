@@ -40,7 +40,7 @@ resource "azurerm_linux_web_app" "main" {
   site_config {
     application_stack {
       docker_image     = "rsalhan/m8-todo-app"
-      docker_image_tag = "prod" #"latest"
+      docker_image_tag = "prod"
     }
   }
 
@@ -89,7 +89,7 @@ resource "azurerm_cosmosdb_account" "main" {
     name = "EnableMongo"
   }
 
-  # lifecycle { prevent_destroy = true }
+  lifecycle { prevent_destroy = true }
 
   consistency_policy {
     consistency_level       = "BoundedStaleness"
@@ -106,6 +106,6 @@ resource "azurerm_cosmosdb_account" "main" {
 # Cosmos DB
 resource "azurerm_cosmosdb_mongo_database" "main" {
   name                = "terraformed-cosmos-mongo-db-m12"
-  resource_group_name = data.azurerm_resource_group.main.name #data.azurerm_cosmosdb_account.example.resource_group_name
-  account_name        = azurerm_cosmosdb_account.main.name #data.azurerm_cosmosdb_account.example.name
+  resource_group_name = data.azurerm_resource_group.main.name
+  account_name        = azurerm_cosmosdb_account.main.name
 }

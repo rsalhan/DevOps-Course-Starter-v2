@@ -39,8 +39,10 @@ resource "azurerm_linux_web_app" "main" {
 
   site_config {
     application_stack {
-      docker_image     = "rsalhan/m8-todo-app"
-      docker_image_tag = "prod"
+      # docker_image     = "rsalhan/m8-todo-app"
+      # docker_image_tag = "prod"
+      docker_image_name = "rsalhan/m8-todo-app:prod"
+      docker_registry_url = "https://index.docker.io"
     }
   }
 

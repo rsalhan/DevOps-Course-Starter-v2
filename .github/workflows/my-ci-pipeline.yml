@@ -30,7 +30,7 @@ jobs:
     name: Deploy Prod
     runs-on: ubuntu-latest
     needs: build
-    if: github.event_name == 'push' && github.ref == 'refs/heads/M11'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/M12'
 
     steps:
     - name: DockerHub Login
@@ -55,7 +55,38 @@ jobs:
     - name: Push Docker Prod Image v2
       run: docker push rsalhan/m8-todo-app:prod
 
-    - name: curl Command
-      env:
-        webhook_url: ${{ secrets.WEBHOOK_URL }}
-      run: curl --fail -dH -X POST $webhook_url
+  terraform:
+    name: Terraform Init/Plan/Apply
+    runs-on: ubuntu-latest
+    needs: job-two
+
+    env:
+      # TF_VAR_example: 
+      # TF_CLI_ARGS_apply: "-auto-approve"
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+      TF_VAR_OAUTH_CLIENT_ID: ${{ secrets.TF_VAR_OAUTH_CLIENT_ID }}
+      TF_VAR_OAUTH_CLIENT_SECRET: ${{ secrets.TF_VAR_OAUTH_CLIENT_SECRET }}
+      TF_VAR_SECRET_KEY: ${{ secrets.TF_VAR_SECRET_KEY }}
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    # - name: TF setup
+    #   uses: hashicorp/setup-terraform@v1
+    #   with: 
+    #     terraform_version: latest
+
+    - name: TF Init
+      run: terraform init
+      
+    - name: TF Plan
+      run: terraform plan -out=tfplan
+
+    - name: TF Apply
+      run: terraform apply -auto-approve
+
+    - run: curl --fail -dH -X POST $(terraform output -raw webhook_url)

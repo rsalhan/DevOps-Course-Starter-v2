@@ -45,7 +45,6 @@ resource "azurerm_linux_web_app" "main" {
   }
 
   app_settings = {
-    # API_KEY, BASE_URL, BOARD_ID, DOING_IDLIST, DONE_IDLIST, TODO_IDLIST, TOKEN
     "DOCKER_REGISTRY_SERVER_URL" = "https://docker.io"
     "FLASK_APP" = "todo_app/app"
     "FLASK_DEBUG" = "true"

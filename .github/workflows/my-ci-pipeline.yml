@@ -87,6 +87,6 @@ jobs:
       run: terraform plan -out=tfplan
 
     - name: TF Apply
-      run: terraform apply -auto-approve
+      run: terraform apply -auto-approve tfplan
 
     - run: curl --fail -dH -X POST $(terraform output -raw webhook_url)

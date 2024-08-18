@@ -23,9 +23,13 @@ class Item:
 
 def add_card():
     collection = connect_to_mongo_db()
+    global new_todo # <<<
     new_todo = request.form.get('new-todo')
     add_todo = {"name": new_todo, "status": "To Do"}
     collection.insert_one(add_todo)
+
+def global_new_todo():
+    return new_todo
 
 def todo_list():
     collection = connect_to_mongo_db()
@@ -62,16 +66,27 @@ def done_list():
 
 def move_to_todo():
     collection = connect_to_mongo_db()
+    global move_to_todo_id # <<<
     move_to_todo_id = request.form.get('id')
     collection.update_one({'_id': ObjectId(move_to_todo_id)}, {"$set": {"status": "To Do"}})
 
+def global_move_to_do_id():
+    return move_to_todo_id
+
 def move_to_doing():
     collection = connect_to_mongo_db()
+    global move_to_doing_id # <<<
     move_to_doing_id = request.form.get('id')
     collection.update_one({'_id': ObjectId(move_to_doing_id)}, {"$set": {"status": "Doing"}})
 
+def global_move_to_doing_id():
+    return move_to_doing_id
+
 def move_to_done():
     collection = connect_to_mongo_db()
+    global move_to_done_id # <<<
     move_to_done_id = request.form.get('id')
     collection.update_one({'_id': ObjectId(move_to_done_id)}, {"$set": {"status": "Done"}})
 
+def global_move_to_done_id():
+    return move_to_done_id

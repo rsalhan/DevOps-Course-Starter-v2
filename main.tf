@@ -39,15 +39,16 @@ resource "azurerm_linux_web_app" "main" {
 
   site_config {
     application_stack {
-      docker_image     = "rsalhan/m8-todo-app"
-      docker_image_tag = "prod"
+      # docker_image     = "rsalhan/m8-todo-app"
+      # docker_image_tag = "prod"
+      docker_image_name = "rsalhan/m8-todo-app:prod"
+      docker_registry_url = "https://index.docker.io"
     }
   }
 
   app_settings = {
-    # API_KEY, BASE_URL, BOARD_ID, DOING_IDLIST, DONE_IDLIST, TODO_IDLIST, TOKEN
     "DOCKER_REGISTRY_SERVER_URL" = "https://docker.io"
-    "FLASK_APP" = "todo_app/app."
+    "FLASK_APP" = "todo_app/app"
     "FLASK_DEBUG" = "true"
     "OAUTH_CLIENT_ID" = var.OAUTH_CLIENT_ID
     "OAUTH_CLIENT_SECRET" = var.OAUTH_CLIENT_SECRET

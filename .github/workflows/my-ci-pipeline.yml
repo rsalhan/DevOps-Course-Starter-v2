@@ -30,7 +30,7 @@ jobs:
     name: Deploy Prod
     runs-on: ubuntu-latest
     needs: build
-    if: github.event_name == 'push' && github.ref == 'refs/heads/M13'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/M12'
 
     steps:
     - name: DockerHub Login
